@@ -4,6 +4,44 @@
 // Copyright (c) 2024 Hajime Saito
 // MIT License
 
+var DatabasePropertyType = {
+    Title: 0,
+    Text: 1,
+    Number: 2,
+    Date: 3,
+    Status: 4,
+    Select: 5,
+    MultiSelect: 6,
+    People: 7,
+    Relation: 8,
+    Checkbox: 9,
+}
+
+function createDatabasePropery(type, value) {
+    switch (type) {
+        case DatabasePropertyType.Title:
+            return new NotionTitle(value);
+        case DatabasePropertyType.RichText:
+            return new NotionRichText(value);
+        case DatabasePropertyType.Number:
+            return new NotionNumber(value);
+        case DatabasePropertyType.Date:
+            return new NotionDate(value);
+        case DatabasePropertyType.Status:
+            return new NotionStatus(value);
+        case DatabasePropertyType.Select:
+            return new NotionSelect(value);
+        case DatabasePropertyType.MultiSelect:
+            return new NotionMultiSelect(value);
+        case DatabasePropertyType.People:
+            return new NotionPeople(value);
+        case DatabasePropertyType.Relation:
+            return new NotionRelation(value);
+        case DatabasePropertyType.Checkbox:
+            return new NotionCheckbox(value);
+    }
+}
+
 class NotionText {
     constructor(content, url=null) {
         this.setTextContent(content, url);
@@ -40,8 +78,7 @@ class NotionRichText {
 }
 
 class NotionNumber {
-    constructor(number) {
-        this.number = 0;
+    constructor(number = 0) {
         this.setValue(number);
     }
 
