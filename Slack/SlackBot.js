@@ -1,13 +1,11 @@
+// GoogleAppsScript/Slack
+// https://github.com/Hajime-Saitou/GoogleAppsScript
+//
+// Copyright (c) 2024 Hajime Saito
+// MIT License
+
 const ApiEndpointBase = "https://www.slack.com/api";
 const SlackBotToken = PropertiesService.getScriptProperties().getProperty("SlackBotToken");
-
-function debug_main() {
-    const message = {
-        "channel": "#test",
-        "text": "test",
-    }
-    postMessage(message);
-}
 
 function stringifyPayload(payload) {
     const params = {}
