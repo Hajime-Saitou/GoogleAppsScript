@@ -93,19 +93,83 @@ class NotionCheckbox {
     }
 }
 
-class NotionMultiSelect {
-  constructor(items) {
-      this.multi_select = []
-      this.setValue(items);
+class NotionSelectItem {
+  constructor(name) {
+      this.setName(name);
   }
 
-  setItems(items) {
-      this.multi_select = items;
-  }
-
-  pushItem(item) {
-      this.multi_select.push(item);
+  setName(name) {
+    this.name = name;
   }
 }
 
+class NotionSelect {
+    constructor(itemName) {
+        this.select = {}
+        this.setName(itemName);
+    }
 
+    setName(itemName) {
+        this.select = new NotionSelectItem(itemName);
+    }
+}
+
+class NotionMultiSelect {
+  constructor(itemNames) {
+      this.multi_select = []
+      this.setSelectItems(itemNames);
+  }
+
+  setSelectItems(itemNames) {
+      for (const itemName of itemNames) {
+          this.appendItem(itemName);
+      }
+  }
+
+  appendItem(itemName) {
+      this.multi_select.push(new NotionSelectItem(itemName));
+  }
+}
+
+class NotionId {
+    constructor(id) {
+        this.setId(id);
+    }
+
+    setId(id) {
+        this.id = id;
+    }
+}
+
+class NotionPeople {
+    constructor(idList) {
+        this.people = []
+        this.setPeople(idList);
+    }
+
+    setPeople(idList) {
+        for (const id in idList) {
+            this.appendPeople(id);
+        }
+    }
+
+    appendPerson(id) {
+        this.people.push(new NotionId(id));
+    }
+}
+
+class NotionRelation {
+    constructor(id) {
+        this.relation = []
+    }
+
+    setRelation(idList) {
+        for (const id in idList) {
+          this.appendRelation(id);
+        }
+    }
+
+    appendRelation(id) {
+        this.relation.push(new NotionId(id));
+    }
+}
