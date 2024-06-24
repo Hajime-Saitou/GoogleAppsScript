@@ -4,7 +4,7 @@
 // Copyright (c) 2024 Hajime Saito
 // MIT License
 
-var DatabasePropertyType = {
+var PropertyType = {
     Title: 0,
     Text: 1,
     Number: 2,
@@ -21,29 +21,29 @@ var DatabasePropertyType = {
 
 function createDatabasePropery(type, value) {
     switch (type) {
-        case DatabasePropertyType.Title:
+        case PropertyType.Title:
             return new NotionTitle(value);
-        case DatabasePropertyType.RichText:
+        case PropertyType.RichText:
             return new NotionRichText(value);
-        case DatabasePropertyType.Number:
+        case PropertyType.Number:
             return new NotionNumber(value);
-        case DatabasePropertyType.Date:
+        case PropertyType.Date:
             return new NotionDate(value);
-        case DatabasePropertyType.Status:
+        case PropertyType.Status:
             return new NotionStatus(value);
-        case DatabasePropertyType.Select:
+        case PropertyType.Select:
             return new NotionSelect(value);
-        case DatabasePropertyType.MultiSelect:
+        case PropertyType.MultiSelect:
             return new NotionMultiSelect(value);
-        case DatabasePropertyType.People:
+        case PropertyType.People:
             return new NotionPeople(value);
-        case DatabasePropertyType.Relation:
+        case PropertyType.Relation:
             return new NotionRelation(value);
-        case DatabasePropertyType.Checkbox:
+        case PropertyType.Checkbox:
             return new NotionCheckbox(value);
-        case DatabasePropertyType.Url:
+        case PropertyType.Url:
             return new NotionUrl(value);
-        case DatabasePropertyType.EmbedUrl:
+        case PropertyType.EmbedUrl:
             return new NotionEmbedUrl(value);
         }
 }
