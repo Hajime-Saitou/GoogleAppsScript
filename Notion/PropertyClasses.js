@@ -15,6 +15,8 @@ var DatabasePropertyType = {
     People: 7,
     Relation: 8,
     Checkbox: 9,
+    Url: 10,
+    EmbedUrl: 11,
 }
 
 function createDatabasePropery(type, value) {
@@ -39,7 +41,11 @@ function createDatabasePropery(type, value) {
             return new NotionRelation(value);
         case DatabasePropertyType.Checkbox:
             return new NotionCheckbox(value);
-    }
+        case DatabasePropertyType.Url:
+            return new NotionUrl(value);
+        case DatabasePropertyType.EmbedUrl:
+            return new NotionEmbedUrl(value);
+        }
 }
 
 class NotionText {
@@ -208,5 +214,35 @@ class NotionRelation {
 
     appendRelation(id) {
         this.relation.push(new NotionId(id));
+    }
+}
+
+class NoitonUrl {
+    constructor(url) {
+        this.url = null;
+        this.setUrl(url)
+    }
+
+    setUrl(url) {
+        this.url = url;
+    }
+
+    getUrl() {
+        return this.url;
+    }
+}
+
+class NoitonEmbedUrl {
+    constructor(url) {
+        this.embed = {};
+        this.setUrl(url)
+    }
+
+    setUrl(url) {
+        this.embed["url"] = url;
+    }
+
+    getUrl() {
+        return this.embed["url"];
     }
 }
