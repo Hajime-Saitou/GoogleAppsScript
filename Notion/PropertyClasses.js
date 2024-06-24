@@ -185,12 +185,12 @@ class NotionPeople {
     }
 
     setPeople(idList) {
-        for (const id in idList) {
+        for (const id of idList) {
             this.appendPeople(id);
         }
     }
 
-    appendPerson(id) {
+    appendPeople(id) {
         this.people.push(new NotionId(id));
     }
 }
@@ -201,7 +201,7 @@ class NotionRelation {
     }
 
     setRelation(idList) {
-        for (const id in idList) {
+        for (const id of idList) {
           this.appendRelation(id);
         }
     }
