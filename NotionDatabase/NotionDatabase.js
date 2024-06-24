@@ -14,9 +14,9 @@ function stringifyPayload(payload) {
     return JSON.stringify(payload);
 }
 
-function callApi(methodName, payload) {
+function callApi(methodName, method, payload) {
   const param = {
-      method: "post",
+      method: method,
       contentType: "application/json",
       headers: { "Authorization": `Bearer ${IntegrationSecret}`, "Notion-Version": ApiVersion },
       payload: stringifyPayload(payload),
@@ -25,12 +25,19 @@ function callApi(methodName, payload) {
   return response;
 }
 
-function insertInto(databaseId, properties) {
+function insert(databaseId, properties) {
   const payload = {
       "parent": {
          "database_id": databaseId,
       },
       "properties": properties,
   }
-  return callApi("pages/", payload);
+  return callApi("pages/", "POST", payload);
+}
+
+function update(pageId, properties) {
+  const payload = {
+      "properties": properties,
+  }
+  return callApi(`pages/${pageId}`, "PATCH", payload);
 }
