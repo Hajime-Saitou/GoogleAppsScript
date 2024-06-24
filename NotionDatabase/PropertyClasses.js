@@ -4,48 +4,8 @@
 // Copyright (c) 2024 Hajime Saito
 // MIT License
 
-var PropertyType = {
-    Title: 0,
-    Text: 1,
-    Number: 2,
-    Date: 3,
-    Status: 4,
-    Select: 5,
-    MultiSelect: 6,
-    People: 7,
-    Relation: 8,
-    Checkbox: 9,
-    Url: 10,
-    EmbedUrl: 11,
-}
-
-function createDatabasePropery(type, value) {
-    switch (type) {
-        case PropertyType.Title:
-            return new NotionTitle(value);
-        case PropertyType.RichText:
-            return new NotionRichText(value);
-        case PropertyType.Number:
-            return new NotionNumber(value);
-        case PropertyType.Date:
-            return new NotionDate(value);
-        case PropertyType.Status:
-            return new NotionStatus(value);
-        case PropertyType.Select:
-            return new NotionSelect(value);
-        case PropertyType.MultiSelect:
-            return new NotionMultiSelect(value);
-        case PropertyType.People:
-            return new NotionPeople(value);
-        case PropertyType.Relation:
-            return new NotionRelation(value);
-        case PropertyType.Checkbox:
-            return new NotionCheckbox(value);
-        case PropertyType.Url:
-            return new NotionUrl(value);
-        case PropertyType.EmbedUrl:
-            return new NotionEmbedUrl(value);
-        }
+function createPropery(typeName, value) {
+  return new (Function(`return Notion${typeName}`)())(value);
 }
 
 class NotionText {
