@@ -15,14 +15,14 @@ function stringifyPayload(payload) {
         if (typeof value === "object") {
               params[key] = JSON.stringify(value);
         }
-    } 
+    }
 
     return params;
 }
 
-function callApi(methodName, payload) {
+function callApi(methodName, method, payload) {
   const param = {
-      method: "post",
+      method: method,
       contentType: "application/x-www-form-urlencoded",
       headers: { "Authorization": `Bearer ${SlackBotToken}` },
       payload: stringifyPayload(payload),
@@ -32,5 +32,5 @@ function callApi(methodName, payload) {
 }
 
 function postMessage(message) {
-  return callApi("chat.postMessage", message);
+  return callApi("chat.postMessage", "POST", message);
 }
