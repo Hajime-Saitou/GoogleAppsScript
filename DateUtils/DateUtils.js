@@ -1,3 +1,9 @@
+// GoogleAppsScript/DateUtils
+// https://github.com/Hajime-Saitou/GoogleAppsScript
+//
+// Copyright (c) 2024 Hajime Saito
+// MIT License
+
 var Weekdays = {
     Sunday: 0,
     Monday: 1,
@@ -17,8 +23,8 @@ function isHoliday(date, holidayCalender="ja.japanese#holiday@group.v.calendar.g
     return new Calender(holidayCalender).getEvents(date).length > 0;
 }
 
-function isBusinessday(date) {
-    return !isHoliday(date) && !isWeekend(date);
+function isBusinessday(date, holidayCalender) {
+    return !isHoliday(date, holidayCalender) && !isWeekend(date);
 }
 
 function addDays(date, days) {
@@ -27,22 +33,35 @@ function addDays(date, days) {
     return d;
 }
 
-function getNextBusinessday(date) {
+function addBusinessdays(date, days, holidayCalender) {
     var d = new Date(date);
+    if (days === 0) {
+        return d;
+    }
 
-    do {
-        d = addDays(d, 1);
-    } while(!isBusinessday(d));
+    for (var i = 1; i <= days; i++) {
+        d = (days > 0 ? getNextBusinessday : getPreviousBusinessday)(d, holidayCalender);
+    }
 
     return d;
 }
 
-function getPreviousBusinessday(date) {
-    var d = new Date(Date);
+function getNextBusinessday(date, holidayCalender) {
+    var d = new Date(date);
+
+    do {
+        d = addDays(d, 1);
+    } while(!isBusinessday(d, holidayCalender));
+
+    return d;
+}
+
+function getPreviousBusinessday(date, holidayCalender) {
+    var d = new Date(date);
 
     do {
       d = addDays(d, -1);
-    } while(!isBusinessday(d));
+    } while(!isBusinessday(d, holidayCalender));
 
     return d;
 }
