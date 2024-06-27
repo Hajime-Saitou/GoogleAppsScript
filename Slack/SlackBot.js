@@ -9,7 +9,7 @@ function createAppsBot() {
 }
 
 function createWebhookBot() {
-    return new SlackWebhookBot();
+    return new SlackWebhookBot(webhookUrl);
 }
 
 class SlackAppsBot {
