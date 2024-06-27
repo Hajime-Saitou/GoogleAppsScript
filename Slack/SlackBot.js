@@ -4,33 +4,69 @@
 // Copyright (c) 2024 Hajime Saito
 // MIT License
 
-const ApiEndpointBase = "https://www.slack.com/api";
-const SlackBotToken = PropertiesService.getScriptProperties().getProperty("SlackBotToken");
+function createAppsBot() {
+    return new SlackAppsBot();
+}
 
-function stringifyPayload(payload) {
-    const params = {}
+function createWebhookBot() {
+    return new SlackWebhookBot();
+}
 
-    Object.assign(params, payload);
-    for (const [key, value] of Object.entries(params)) {
-        if (typeof value === "object") {
-              params[key] = JSON.stringify(value);
-        }
+class SlackAppsBot {
+    constructor() {
+      this.apiEndpointBase = "https://www.slack.com/api";
+      this.bearerToken = PropertiesService.getScriptProperties().getProperty("bearerToken");
     }
 
-    return params;
+    stringifyPayload(payload) {
+        const params = {}
+
+        Object.assign(params, payload);
+        for (const [key, value] of Object.entries(params)) {
+            if (typeof value === "object") {
+                params[key] = JSON.stringify(value);
+            }
+        }
+
+        return params;
+    }
+
+    callApi(methodName, method, payload) {
+        const param = {
+            method: method,
+            contentType: "application/x-www-form-urlencoded",
+            headers: { "Authorization": `Bearer ${this.bearerToken}` },
+            payload: this.stringifyPayload(payload),
+        }
+        const response = UrlFetchApp.fetch(`${this.apiEndpointBase}/${methodName}`, param);
+        return response;
+    }
+  
+    postMessage(message) {
+        return this.callApi("chat.postMessage", "POST", message);
+    }
 }
 
-function callApi(methodName, method, payload) {
-  const param = {
-      method: method,
-      contentType: "application/x-www-form-urlencoded",
-      headers: { "Authorization": `Bearer ${SlackBotToken}` },
-      payload: stringifyPayload(payload),
-  }
-  const response = UrlFetchApp.fetch(`${ApiEndpointBase}/${methodName}`, param);
-  return response;
-}
+class SlackWebhookBot {
+    constructor(webhookUrl) {
+        this.webhookUrl = webhookUrl;
+    }
 
-function postMessage(message) {
-  return callApi("chat.postMessage", "POST", message);
+    stringifyPayload(payload) {
+        return JSON.stringify(payload);
+    }
+
+    callApi(webhookUrl, method, payload) {
+        const param = {
+            method: method,
+            contentType: "application/json",
+            payload: this.stringifyPayload(payload),
+        }
+        const response = UrlFetchApp(webhookUrl, param);
+        return response;
+    }
+
+    postMessage(message) {
+        return this.callApi(this.webhookUrl, "POST", message);
+    }
 }
