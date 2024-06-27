@@ -1,4 +1,4 @@
-// GoogleAppsScript/Notion
+// GoogleAppsScript/NotionDatabase
 // https://github.com/Hajime-Saitou/GoogleAppsScript
 //
 // Copyright (c) 2024 Hajime Saito
