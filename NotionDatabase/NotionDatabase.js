@@ -41,3 +41,10 @@ function update(pageId, properties) {
   }
   return callApi(`pages/${pageId}`, "PATCH", payload);
 }
+
+function archived(pageId) {
+  const payload = {
+      "archived": true,
+  }
+  return callApi(`pages/${pageId}`, "PATCH", payload);
+}
