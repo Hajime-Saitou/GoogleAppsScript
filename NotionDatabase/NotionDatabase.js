@@ -25,6 +25,12 @@ function callApi(methodName, method, payload) {
   return response;
 }
 
+/**
+ * 指定したNotionデータベースにページを挿入する
+ * @param {string} databaseId NoitonデータベースID
+ * @param {Object} properties Notionデータベースプロパティ
+ * @returns Notion APIのresponse
+ */
 function insert(databaseId, properties) {
   const payload = {
       "parent": {
@@ -35,6 +41,12 @@ function insert(databaseId, properties) {
   return callApi("pages/", "POST", payload);
 }
 
+/**
+ * 指定したページのプロパティを更新する
+ * @param {string} pageId Notionデータベースに登録されたページのID
+ * @param {Object} properties Notionデータベースプロパティ（更新差分）
+ * @returns Notion APIのresponse
+ */
 function update(pageId, properties) {
   const payload = {
       "properties": properties,
@@ -42,6 +54,11 @@ function update(pageId, properties) {
   return callApi(`pages/${pageId}`, "PATCH", payload);
 }
 
+/**
+ * 指定したページをアーカイブする
+ * @param {string} pageId NotionページID
+ * @returns Notion APIのresponse
+ */
 function archived(pageId) {
   const payload = {
       "archived": true,

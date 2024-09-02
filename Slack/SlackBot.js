@@ -4,14 +4,26 @@
 // Copyright (c) 2024 Hajime Saito
 // MIT License
 
+/**
+ * Slack Appsを利用したbotオブジェクトを生成する
+ * @returns botオブジェクト
+ */
 function createAppsBot() {
     return new SlackAppsBot();
 }
 
+/**
+ * Incoming Webhookを利用したbotを生成する
+ * @param {string} webhookUrl Incoming Webhook URL
+ * @returns 
+ */
 function createWebhookBot(webhookUrl) {
     return new SlackWebhookBot(webhookUrl);
 }
 
+/**
+ * Slack Appsを利用したbot
+ */
 class SlackAppsBot {
     constructor() {
       this.apiEndpointBase = "https://www.slack.com/api";
@@ -47,6 +59,9 @@ class SlackAppsBot {
     }
 }
 
+/**
+ * Incoming Webhookを利用したbot
+ */
 class SlackWebhookBot {
     constructor(webhookUrl) {
         this.webhookUrl = webhookUrl;
