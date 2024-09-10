@@ -1,7 +1,7 @@
 function debug_main() {
-    const message = {
+    const payload = {
         "channel": "#test",
         "text": "test",
     }
-    postMessage(message);
+    postMessage(payload);
 }

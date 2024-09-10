@@ -24,38 +24,12 @@ function createWebhookBot(webhookUrl) {
 /**
  * Slack Appsを利用したbot
  */
-class SlackAppsBot {
+class SlackAppsBot extends SlackRestApiCaller{
     constructor() {
-      this.apiEndpointBase = "https://www.slack.com/api";
-      this.bearerToken = PropertiesService.getScriptProperties().getProperty("bearerToken");
-    }
-
-    stringifyPayload(payload) {
-        const params = {}
-
-        Object.assign(params, payload);
-        for (const [key, value] of Object.entries(params)) {
-            if (typeof value === "object") {
-                params[key] = JSON.stringify(value);
-            }
-        }
-
-        return params;
-    }
-
-    callApi(methodName, method, payload) {
-        const param = {
-            method: method,
-            contentType: "application/x-www-form-urlencoded",
-            headers: { "Authorization": `Bearer ${this.bearerToken}` },
-            payload: this.stringifyPayload(payload),
-        }
-        const response = UrlFetchApp.fetch(`${this.apiEndpointBase}/${methodName}`, param);
-        return response;
     }
   
-    postMessage(message) {
-        return this.callApi("chat.postMessage", "POST", message);
+    postMessage(payload) {
+        return this.callApi("chat.postMessage", "POST", payload);
     }
 }
 
@@ -67,21 +41,7 @@ class SlackWebhookBot {
         this.webhookUrl = webhookUrl;
     }
 
-    stringifyPayload(payload) {
-        return JSON.stringify(payload);
-    }
-
-    callApi(webhookUrl, method, payload) {
-        const param = {
-            method: method,
-            contentType: "application/json",
-            payload: this.stringifyPayload(payload),
-        }
-        const response = UrlFetchApp(webhookUrl, param);
-        return response;
-    }
-
-    postMessage(message) {
-        return this.callApi(this.webhookUrl, "POST", message);
+    postMessage(payload) {
+        return this.callApiDirect(this.webhookUrl, "POST", payload);
     }
 }
