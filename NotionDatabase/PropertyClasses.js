@@ -177,7 +177,7 @@ class NotionRelation {
     }
 }
 
-class NoitonUrl {
+class NotionUrl {
     constructor(url) {
         this.url = null;
         this.setUrl(url)
@@ -192,7 +192,7 @@ class NoitonUrl {
     }
 }
 
-class NoitonEmbedUrl {
+class NotionEmbedUrl {
     constructor(url) {
         this.embed = {};
         this.setUrl(url)
