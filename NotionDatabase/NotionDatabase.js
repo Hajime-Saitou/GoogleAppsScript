@@ -15,12 +15,15 @@ function stringifyPayload(payload) {
 }
 
 function callApi(methodName, method, payload) {
-  const param = {
+  var param = {
       method: method,
       contentType: "application/json",
       headers: { "Authorization": `Bearer ${IntegrationSecret}`, "Notion-Version": ApiVersion },
-      payload: stringifyPayload(payload),
   }
+  if (payload) {
+    param["payload"] = stringifyPayload(payload);
+  }
+
   const response = UrlFetchApp.fetch(`${ApiEndpointBase}/${methodName}`, param);
   return response;
 }
@@ -64,4 +67,14 @@ function archived(pageId) {
       "archived": true,
   }
   return callApi(`pages/${pageId}`, "PATCH", payload);
+}
+
+/**
+ * 指定したデータベースのページ情報を取得する
+ * @param {string} databaseId NotionデータベースID
+ * @param {JSON} payload
+ * @returns Notion APIのresponse
+ */
+function select(databaseId, payload=null) {
+  return callApi(`databases/${databaseId}/query`, "POST", payload);
 }
