@@ -78,3 +78,25 @@ function archived(pageId) {
 function select(databaseId, payload=null) {
   return callApi(`databases/${databaseId}/query`, "POST", payload);
 }
+
+/**
+ * 指定したデータベースのページ情報を全件取得する
+ * @param {string} databaseId NotionデータベースID
+ * @param {JSON} payload
+ * @returns Notion APIのresponse[]
+ */
+function selectAllPages(databaseId, payload=null) {
+  results = []
+
+  while(true) {
+    response = JSON.parse(select(databaseId, payload=null));
+    results.append(response);
+
+    if (!response["has_more"]) {
+      break;
+    }
+    payload["start_cursor"] = response["next_cursor"];
+  }
+
+  return results;
+}
