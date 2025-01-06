@@ -86,17 +86,21 @@ function select(databaseId, payload=null) {
  * @returns Notion APIのresponse[]
  */
 function selectAllPages(databaseId, payload=null) {
-  results = []
+  responses = []
 
   while(true) {
-    response = JSON.parse(select(databaseId, payload=null));
-    results.append(response);
+    response = JSON.parse(select(databaseId, payload));
+    responses.push(response);
 
     if (!response["has_more"]) {
       break;
     }
+
+    if (!payload) {
+      payload = {}
+    }
     payload["start_cursor"] = response["next_cursor"];
   }
 
-  return results;
+  return responses;
 }
