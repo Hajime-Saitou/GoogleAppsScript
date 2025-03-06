@@ -14,7 +14,7 @@ class NotionText {
     }
 
     setTextContent(content, url=null) {
-        this.text = { "content": content }
+        this.text = { "content": `${content}` }
         if (url !== null) {
             this.text.link = url;
         }
