@@ -7,7 +7,7 @@
 /**
  * 曜日名の定義
  */
-var Weekdays = {
+var DayOfWeek = {
     Sunday: 0,
     Monday: 1,
     Tuesday: 2,
@@ -23,8 +23,8 @@ var Weekdays = {
  * @returns {boolean} 週末である場合はtrueを返す
  */
 function isWeekend(date) {
-    const weekdays = date.getDay();
-    return weekdays === Weekdays.Saturday || weekdays === Weekdays.Sunday;
+    const dayOfWeek = date.getDay();
+    return dayOfWeek === DayOfWeek.Saturday || dayOfWeek === DayOfWeek.Sunday;
 }
 
 /**
@@ -143,12 +143,21 @@ class Calender {
     }
 
     getEvents(startDate, endDate=null) {
-      var s = new Date(startDate);
-      s.setHours(0, 0, 0)
-      var e = new Date(endDate === null ? startDate : endDate);
-      e.setHours(23, 59, 59);
+        var s = new Date(startDate);
+        s.setHours(0, 0, 0)
+        var e = new Date(endDate === null ? startDate : endDate);
+        e.setHours(23, 59, 59);
 
-      return this.calendar.getEvents(s, e);
+        return this.calendar.getEvents(s, e);
     }
 }
 
+/**
+ * 指定した日付の週の指定曜日を求める
+ * @param {Date} date ベースとなる日付
+ * @param {number} weekday 曜日
+ * @returns {Date} 指定曜日
+ */
+function getDayOfThisWeek(date, dayOfWeek) {
+    return addDays(date, -date.getDay() + dayOfWeek);
+}
