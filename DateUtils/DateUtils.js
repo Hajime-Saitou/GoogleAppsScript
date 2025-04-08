@@ -48,6 +48,36 @@ function isBusinessday(date, holidayCalender) {
 }
 
 /**
+ * date1がdate2の翌営業日であるかどうかを判定する
+ * @param {Date} date1 判定したい日付
+ * @param {Date} date2 基準となる日付
+ * @returns {boolean} date1がdate2の翌営業日である場合はtrueを返す
+ */
+function isNextBusinessday(date1, date2) {
+    var d1 = new Date(date1);
+    d1.setHours(0, 0, 0, 0);
+    var d2 = new Date(date2);
+    d2.setHours(0, 0, 0, 0);
+
+    return date1.getTime() === getNextBusinessday(date2).getTime();
+}
+
+/**
+ * date1がdate2の前営業日であるかどうかを判定する
+ * @param {Date} date1 判定したい日付
+ * @param {Date} date2 基準となる日付
+ * @returns {boolean} date1がdate2の前営業日である場合はtrueを返す
+ */
+function isPreviousBusinessday(date1, date2) {
+    var d1 = new Date(date1);
+    d1.setHours(0, 0, 0, 0);
+    var d2 = new Date(date2);
+    d2.setHours(0, 0, 0, 0);
+
+    return date1.getTime() === getPreviousBusinessday(date2).getTime();
+}
+
+/**
  * 指定した日付に対して指定された日数を加算する（カレンダーベース）
  * @param {Date} date ベースとなる日付
  * @param {number} days 日数
