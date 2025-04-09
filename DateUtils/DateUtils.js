@@ -59,7 +59,7 @@ function isNextBusinessday(date1, date2) {
     var d2 = new Date(date2);
     d2.setHours(0, 0, 0, 0);
 
-    return date1.getTime() === getNextBusinessday(date2).getTime();
+    return d1.getTime() === getNextBusinessday(d2).getTime();
 }
 
 /**
@@ -74,7 +74,7 @@ function isPreviousBusinessday(date1, date2) {
     var d2 = new Date(date2);
     d2.setHours(0, 0, 0, 0);
 
-    return date1.getTime() === getPreviousBusinessday(date2).getTime();
+    return d1.getTime() === getPreviousBusinessday(d2).getTime();
 }
 
 /**
