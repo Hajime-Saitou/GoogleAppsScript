@@ -191,3 +191,48 @@ class Calender {
 function getDayOfThisWeek(date, dayOfWeek) {
     return addDays(date, -date.getDay() + dayOfWeek);
 }
+
+/**
+ * 2つの日付の日数差を求める
+ * @param {Date} date1 日付1
+ * @param {Date} date2 日付2
+ * @returns {number} 日番号
+ */
+function getDateDiff(date1, date2) {
+    if (date1 < date2) {
+        var d1 = new Date(date1);
+        var d2 = new Date(date2);
+    }
+    else {
+        var d2 = new Date(date1);
+        var d1 = new Date(date2);
+    }
+    return Math.floor((d2 - d1) / (24 * 60 * 60 * 1000));
+}
+
+/**
+ * 指定した日付の元日を求める
+ * @param {Date} date 日付
+ * @returns {Date} 元日
+ */
+function getNewyearDate(date) {
+    return new Date(date.getFullYear(), 1, 1);
+}
+
+/**
+ * 指定した日付の日番号を求める
+ * @param {Date} date 日付
+ * @returns {number} 日番号
+ */
+function getDayNumber(date) {
+    return getDateDiff(getNewyearDate(date), date);
+}
+
+/**
+ * 指定した日付の週番号を求める（日曜始まり）
+ * @param {Date} date 日付
+ * @returns {number} 週番号
+ */
+function getWeekNumber(date) {
+    return Math.floor((getDayNumber(date) + getNewyearDate(date).getDay) / 7) + 1; // +1 for origin 1
+}
