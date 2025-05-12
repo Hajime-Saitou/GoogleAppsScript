@@ -6,31 +6,33 @@
 
 /**
  * Slack Appsを利用したbotオブジェクトを生成する
- * @returns botオブジェクト
+ * @param {string} bearerToken Slack Appsが発行したトークン
+ * @returns {object} botオブジェクト
  */
-function createAppsBot() {
-    return new SlackAppsBot();
-}
-
-/**
- * Incoming Webhookを利用したbotを生成する
- * @param {string} webhookUrl Incoming Webhook URL
- * @returns 
- */
-function createWebhookBot(webhookUrl) {
-    return new SlackWebhookBot(webhookUrl);
+function createAppsBot(bearerToken) {
+    return new SlackAppsBot(bearerToken);
 }
 
 /**
  * Slack Appsを利用したbot
  */
-class SlackAppsBot extends SlackRestApiCaller{
-    constructor() {
+class SlackAppsBot extends SlackRestApiCaller {
+    constructor(bearerToken) {
+        super(bearerToken);
     }
   
     postMessage(payload) {
         return this.callApi("chat.postMessage", "POST", payload);
     }
+}
+
+/**
+ * Incoming Webhookを利用したbotを生成する
+ * @param {string} webhookUrl Incoming Webhook URL
+ * @returns {object} botオブジェクト
+ */
+function createWebhookBot(webhookUrl) {
+    return new SlackWebhookBot(webhookUrl);
 }
 
 /**

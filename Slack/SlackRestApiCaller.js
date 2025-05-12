@@ -7,9 +7,9 @@
 const SlackApiEndpointBase = "https://www.slack.com/api";
 
 class SlackRestApiCaller {
-    constructor() {
+    constructor(bearerToken) {
       this.apiEndpointBase = SlackApiEndpointBase;
-      this.bearerToken = PropertiesService.getScriptProperties().getProperty("bearerToken");
+      this.bearerToken = bearerToken;
     }
 
     stringifyPayload(payload) {
@@ -34,7 +34,10 @@ class SlackRestApiCaller {
         const param = {
             method: method,
             contentType: "application/x-www-form-urlencoded",
-            headers: { "Authorization": `Bearer ${this.bearerToken}` },
+        }
+
+        if (this.bearerToken !== null) {
+            param["headers"] = { "Authorization": `Bearer ${this.bearerToken}` }
         }
 
         if (method.toUpperCase() == "GET") {
